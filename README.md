@@ -19,7 +19,6 @@ The docker files are built based on the information provided in the spring guide
 
 To integrate into the github CI pipeline, following marketplace tool is utilized:
 - [Build and Push Docker Image](https://github.com/marketplace/actions/build-and-push-docker-images)
-- [Maven CLI for Github Actions](https://github.com/marketplace/actions/maven-cli-for-github-actions-with-jdk-8-11-and-13)
 
 To link github and docker hub, a token was generated on the docker hub. This token was then provisioned 
 as a github secret to help build and push images to docker hub. 
