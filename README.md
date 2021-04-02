@@ -34,6 +34,8 @@ The image is published as iconsent/springboot-demo:latest docker image in docker
 The application reads few properties from the application.properties file and
 returns them. Once the application is running use curl to obtain the values:
 
+    docker build . -t iconsent/springboot-demo
+    docker run -p 8080:8080 iconsent/springboot-demo
     curl http://localhost:8080/properties
 
 
