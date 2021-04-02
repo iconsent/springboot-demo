@@ -24,7 +24,7 @@ To link github and docker hub, a token was generated on the docker hub. This tok
 as a github secret to help build and push images to docker hub. 
 
 Github action based on these secrets was created for triggering the build and push of the docker 
-image to the hub.docker.com container registry.
+image to the hub.docker.com [container registry](https://hub.docker.com/r/iconsent/springboot-demo).
 
 The image is published as iconsent/springboot-demo:latest docker image in docker hub.
 
