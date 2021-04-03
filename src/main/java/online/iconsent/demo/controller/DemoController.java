@@ -18,6 +18,9 @@ public class DemoController {
     @Value("${application.version}")
     String appVersion;
 
+    @Value("${custom.property}")
+    String customProperty;
+
     @RequestMapping(
             path = "/properties"
     )
@@ -25,6 +28,7 @@ public class DemoController {
         Map<String,String> response = new HashMap<>();
         response.put("spring.application.name",appName);
         response.put("application.version",appVersion);
+        response.put("custom.property",customProperty);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

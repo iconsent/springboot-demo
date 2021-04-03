@@ -1,0 +1,63 @@
+#
+# kubectl create configmap springboot-dev-config --from-file=application-dev.properties
+#
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: springboot-demo
+  name: springboot-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: springboot-demo
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: springboot-demo
+    spec:
+      containers:
+      - image: iconsent/springboot-demo
+        name: demo
+        env:
+          # when specifying a directory in the SPRING_CONFIG_LOCATION property, the file must end with / 
+          - name: SPRING_CONFIG_LOCATION
+            value: file:/etc/config/
+          - name: SPRING_PROFILES_ACTIVE
+            value: dev  
+        resources: {}
+        volumeMounts:
+        - name: springboot-dev-config-volume
+          mountPath: /etc/config
+          readOnly: true
+      volumes:
+        - name: springboot-dev-config-volume
+          configMap:
+            # Provide the name of the ConfigMap containing the files you want
+            # to add to the container
+            name: springboot-dev-config
+            # when a file is to be created from the uploaded file define it as items(key, path)
+            items:
+              - key: application-dev.properties
+                path: application-dev.properties
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: springboot-demo
+  name: springboot-demo
+spec:
+  ports:
+  - name: 8080-8080
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: springboot-demo
+  type: ClusterIP
+status:
+  loadBalancer: {}

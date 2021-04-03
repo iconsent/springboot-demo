@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: springboot-demo
+  name: springboot-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: springboot-demo
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: springboot-demo
+    spec:
+      containers:
+      - image: iconsent/springboot-demo
+        name: demo
+        env:
+          - name: CUSTOM_PROPERTY
+            value: "from deployment-2 file"            
+        resources: {}
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: springboot-demo
+  name: springboot-demo
+spec:
+  ports:
+  - name: 8080-8080
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: springboot-demo
+  type: ClusterIP
+status:
+  loadBalancer: {}

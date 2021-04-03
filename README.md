@@ -28,7 +28,59 @@ image to the hub.docker.com [container registry](https://hub.docker.com/r/iconse
 
 The image is published as iconsent/springboot-demo:latest docker image in docker hub.
 
-# The application
+# The application.properties file in kubernetes
+
+There are multiple ways to set the properties in the springboot application running in the 
+kubernetes cluster:
+
+1. Default application.properties file in the main/resource folder
+2. Environment variables
+3. ConfigMap as environment variables
+4. ConfigMap as file
+
+See the deployment files 1-4 in the kubernetes folder
+## Environment variables
+
+    spec:
+       template:
+           spec:
+               containers:
+               - env:
+                    - name: CUSTOM_PROPERTY
+                      value: "from environment in yaml"
+
+## ConfigMap as environment variables
+
+    spec:
+       template:
+           spec:
+               containers:
+               - env:
+               - name: CUSTOM_PROPERTY
+                   valueFrom:
+                       configMapKeyRef:
+                       name: springboot-demo-configmap
+                       key: custom.property
+
+## ConfigMap as a file
+
+    spec:
+        template:
+            spec:
+                containers:
+                    volumeMounts:
+                    - name: application-config
+                      mountPath: "/deployments/config"
+                      readOnly: true
+                volumes:
+                - name: application-config
+                  configMap:
+                    name: spring-app-config
+                    items:
+                    - key: application.properties
+                      path: application.properties
+
+# Local testing
 
 The application reads few properties from the application.properties file and
 returns them. Once the application is running use curl to obtain the values:
