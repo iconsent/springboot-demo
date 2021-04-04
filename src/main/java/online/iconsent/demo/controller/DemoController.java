@@ -33,11 +33,12 @@ public class DemoController {
     )
     ResponseEntity<Map<String, String>> getProperties(@RequestHeader Map<String, String> headers) throws SocketException, UnknownHostException {
         Map<String,String> response = new HashMap<>();
-        response.put("spring.application.name",appName);
-        response.put("application.version",appVersion);
-        response.put("custom.property",customProperty);
-        response.put("ipAddresses",getIPAddresses());
-        response.put("hostname",InetAddress.getLocalHost().getHostName());
+        response.put("Application",appName);
+        response.put("Version",appVersion);
+        response.put("Custom property",customProperty);
+        response.put("Backend IP Addresses",getIPAddresses());
+        response.put("Hostname",InetAddress.getLocalHost().getHostName());
+        response.put("Time",new Date().toString());
         response.forEach((key, value) -> LOG.info(key+":"+value));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
