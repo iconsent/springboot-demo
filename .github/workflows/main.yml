@@ -7,6 +7,8 @@ on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
     branches: [ main ]
+    tags:
+      - 'v*.*.*'
   pull_request:
     branches: [ main ]
 
@@ -22,6 +24,27 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v2
+      -
+        name: Docker meta
+        id: meta
+        uses: crazy-max/ghaction-docker-meta@v2
+        with:
+          # list of Docker images to use as base name for tags
+          images: |
+            iconsent/springboot-demo
+            iconsent/springboot-demo
+          # generate Docker tags based on the following events/attributes
+          tags: |
+            type=schedule
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
+            type=sha
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -41,7 +64,8 @@ jobs:
         with:
           platforms: linux/arm64, linux/amd64
           push: true
-          tags: iconsent/springboot-demo:latest
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
       -
         name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
