@@ -27,6 +27,9 @@ public class DemoController {
     @Value("${custom.property}")
     String customProperty;
 
+    @Value("${build.date}")
+    String buildDate;
+
     @CrossOrigin
     @RequestMapping(
             path = "/properties"
@@ -35,6 +38,7 @@ public class DemoController {
         Map<String,String> response = new HashMap<>();
         response.put("Application",appName);
         response.put("Version",appVersion);
+        response.put("Build-Date",buildDate);
         response.put("Custom property",customProperty);
         response.put("Backend IP Addresses",getIPAddresses());
         response.put("Hostname",InetAddress.getLocalHost().getHostName());
