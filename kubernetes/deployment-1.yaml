@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - image: iconsent/springboot-demo
-        name: demo
+        name: springboot-demo
         resources: {}
 status: {}
 ---

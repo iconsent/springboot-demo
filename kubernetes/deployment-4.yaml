@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - image: iconsent/springboot-demo
-        name: demo
+        name: springboot-demo
         env:
           # when specifying a directory in the SPRING_CONFIG_LOCATION property, the file must end with / 
           - name: SPRING_CONFIG_LOCATION

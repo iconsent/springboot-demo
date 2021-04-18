@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
       - image: iconsent/springboot-demo
-        name: demo
+        name: springboot-demo
         env:
           - name: CUSTOM_PROPERTY
             valueFrom:
